@@ -1,6 +1,6 @@
 # 📱 Готовые конфигурации для подключения (Client Configs)
 
-Все протоколы уже настроены на сервере `212.113.101.104`. Вы можете импортировать ссылки ниже в любое поддерживаемое приложение.
+Домен сервера: **`v3.idivles.ru`** (IP: `212.113.101.104`)
 
 ---
 
@@ -9,7 +9,7 @@
 > **Преимущества**: Наивысшая скорость, нулевой оверхед, маскировка под настоящий трафик Google (`dl.google.com`), проходит любые DPI-фильтры.
 
 ```
-vless://f3923284-03eb-4920-839a-9195af363bca@212.113.101.104:443?type=tcp&security=reality&pbk=8umwn2l_7CTOfHkc9eIzLW-alojT5Nlrpi0Aa_ssmGY&fp=chrome&sni=dl.google.com&sid=2a7136af&flow=xtls-rprx-vision#VPS-VLESS-Reality
+vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#VPS-VLESS-Reality
 ```
 
 ### Рекомендуемые приложения:
@@ -22,17 +22,17 @@ vless://f3923284-03eb-4920-839a-9195af363bca@212.113.101.104:443?type=tcp&securi
 
 ## 2. 🛡 WireGuard (Классический туннель)
 
-Сохраните следующий текст в файл `vps_vpn.conf` и импортируйте в официальное приложение **WireGuard** или **AmneziaVPN**:
+Импортируйте в официальное приложение **WireGuard** или **AmneziaVPN**:
 
 ```ini
 [Interface]
-PrivateKey = cP9PCbdWcKGi0wg8Zq3OEQLatZ4OJJk781KIQNqJZ1Q=
+PrivateKey = SLcXGBmkqtmxAoTW6d0wd56XHAD29XWm/GNqaTmefm8=
 Address = 10.8.0.2/24
 DNS = 1.1.1.1, 8.8.8.8
 
 [Peer]
-PublicKey = ra5KqfAWid/6ROiEATQ98Z9e+ZOJvRIV8VdWNEtE7Bk=
-Endpoint = 212.113.101.104:51820
+PublicKey = ulrgbD+6G59BqcnRJDL357A1xMAQ8oBti/55BrjoNB4=
+Endpoint = v3.idivles.ru:51820
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
 ```
@@ -42,13 +42,21 @@ PersistentKeepalive = 25
 ## 3. 🚀 Shadowsocks 2022
 
 ```
-ss://YWVzLTEyOC1nY206aGdpSU5ScVkzTlYxU1FqS3ROQ2VpZ0AyMTIuMTEzLjEwMS4xMDQ6ODQ0Mw==#VPS-Shadowsocks
+ss://YWVzLTEyOC1nY206enVwV0ZCZWhKaWROQTF5NUtic3ZiQUB2My5pZGl2bGVzLnJ1Ojg0NDM=#VPS-Shadowsocks
 ```
 
 ---
 
-## 4. 🔒 Trojan TLS
+## 4. 🔒 Trojan TLS (с валидным Let's Encrypt SSL)
 
 ```
-trojan://02be075a-1ae4-4326-ac46-d91f1695d941@212.113.101.104:8444#VPS-Trojan
+trojan://cd3a13d7-46fe-40d4-904b-e522fe459544@v3.idivles.ru:8444?security=tls&sni=v3.idivles.ru#VPS-Trojan-TLS
 ```
+
+---
+
+## 🌐 5. Веб-Панель 3X-UI
+
+- **URL:** [http://v3.idivles.ru:18550/D11nS5my7qbNKjqt7L/](http://v3.idivles.ru:18550/D11nS5my7qbNKjqt7L/)
+- **Логин:** `admin`
+- **Пароль:** `AdminVpn2026!`

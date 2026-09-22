@@ -1,28 +1,50 @@
-# 📱 Готовые конфигурации для подключения (Client Configs)
+# 📱 Готовые конфигурации и Подписка (Client Configs)
 
-Домен сервера: **`v3.idivles.ru`** (IP: `212.113.101.104`)
-
----
-
-## 1. ⚡ VLESS + XTLS-Reality (Основной / Рекомендуемый)
-
-> **Преимущества**: Наивысшая скорость, нулевой оверхед, маскировка под настоящий трафик Google (`dl.google.com`), проходит любые DPI-фильтры.
-
-```
-vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#VPS-VLESS-Reality
-```
-
-### Рекомендуемые приложения:
-- **iOS**: [Happ](https://apps.apple.com/app/happ-proxy-utility/id6504287215), [Streisand](https://apps.apple.com/app/streisand/id6450534064), [FoXray](https://apps.apple.com/app/foxray/id6448898396)
-- **Android**: [Happ](https://play.google.com/store/apps/details?id=com.happproxy), [v2rayNG](https://github.com/2dust/v2rayNG/releases), [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid/releases)
-- **Windows**: [v2rayN](https://github.com/2dust/v2rayN/releases), [Hiddify](https://github.com/hiddify/hiddify-next/releases), [Nekoray](https://github.com/MatsuriDayo/nekoray/releases)
-- **macOS**: [FoXray](https://apps.apple.com/app/foxray/id6448898396), [Hiddify](https://github.com/hiddify/hiddify-next/releases), [V2Box](https://apps.apple.com/app/v2box-v2ray-client/id6446814043)
+Сервер: **`v3.idivles.ru`** (IP: `212.113.101.104`)
 
 ---
 
-## 2. 🛡 WireGuard (Классический туннель)
+## 📥 1. Единая ссылка подписки (Рекомендуется для Happ / Streisand / v2ray)
 
-Импортируйте в официальное приложение **WireGuard** или **AmneziaVPN**:
+> **Преимущество:** Добавляется один раз в приложение. При любых изменениях на сервере клиент автоматически обновляет список серверов и протоколов.
+
+```
+https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059
+```
+
+### 📱 Инструкция для Happ (iOS / Android):
+1. Скопируйте ссылку подписки выше.
+2. Откройте приложение **Happ** (или Streisand / v2rayNG / v2rayN / Hiddify).
+3. Нажмите **+** -> **Добавить подписку (Импорт из буфера обмена)**.
+4. Выберите нужный сервер из списка и нажмите **Подключиться**.
+
+---
+
+## ⚡ 2. Популярные конфигурации VLESS Reality (Прямой импорт)
+
+### 🔹 Google SNI (Основной, маскировка под Google Chrome / Downloads):
+```
+vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Google)
+```
+
+### 🔹 Microsoft SNI (Повышенная проходимость через ТСПУ / DPI):
+```
+vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.microsoft.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Microsoft)
+```
+
+### 🔹 Samsung SNI:
+```
+vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.samsung.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Samsung)
+```
+
+### 🔹 Direct IP (для сетей без доступа к DNS):
+```
+vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@212.113.101.104:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20Direct%20IP%20(Google)
+```
+
+---
+
+## 🛡 3. WireGuard (Полноканальный VPN)
 
 ```ini
 [Interface]
@@ -39,7 +61,7 @@ PersistentKeepalive = 25
 
 ---
 
-## 3. 🚀 Shadowsocks 2022
+## 🚀 4. Shadowsocks 2022
 
 ```
 ss://YWVzLTEyOC1nY206enVwV0ZCZWhKaWROQTF5NUtic3ZiQUB2My5pZGl2bGVzLnJ1Ojg0NDM=#VPS-Shadowsocks
@@ -47,7 +69,7 @@ ss://YWVzLTEyOC1nY206enVwV0ZCZWhKaWROQTF5NUtic3ZiQUB2My5pZGl2bGVzLnJ1Ojg0NDM=#VP
 
 ---
 
-## 4. 🔒 Trojan TLS (с валидным Let's Encrypt SSL)
+## 🔒 5. Trojan TLS (Let's Encrypt SSL)
 
 ```
 trojan://cd3a13d7-46fe-40d4-904b-e522fe459544@v3.idivles.ru:8444?security=tls&sni=v3.idivles.ru#VPS-Trojan-TLS
@@ -55,7 +77,7 @@ trojan://cd3a13d7-46fe-40d4-904b-e522fe459544@v3.idivles.ru:8444?security=tls&sn
 
 ---
 
-## 🌐 5. Веб-Панель 3X-UI
+## 🌐 6. Веб-Панель управления 3X-UI
 
 - **URL:** [https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/](https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/)
 - **Логин:** `admin`

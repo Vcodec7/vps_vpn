@@ -1,18 +1,18 @@
 # 📈 VPS Status & Health Report
 
-**Последнее обновление:** `2026-09-22 16:29:36`
+**Последнее обновление:** `2026-09-22 16:41:11`
 **Сервер:** `212.113.101.104`
 
 ## 🖥 Операционная система и Ядро
 - **ОС:** `Debian GNU/Linux 13 (trixie)`
 - **Ядро:** `6.12.85+deb13-amd64`
-- **Аптайм:** `up 1 hour, 25 minutes`
+- **Аптайм:** `up 1 hour, 37 minutes`
 - **TCP Контроль перегрузок:** `net.ipv4.tcp_congestion_control = bbr`
 
 ## 🧠 Память (RAM & Swap)
 ```
 total        used        free      shared  buff/cache   available
-Mem:           3.8Gi       482Mi       1.5Gi       2.0Mi       2.1Gi       3.4Gi
+Mem:           3.8Gi       489Mi       1.5Gi       2.0Mi       2.1Gi       3.4Gi
 Swap:          1.0Gi          0B       1.0Gi
 ```
 
@@ -54,15 +54,15 @@ To                         Action      From
 ```
 Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                     
 udp   UNCONN 0      0            0.0.0.0:51820      0.0.0.0:*                                               
-udp   UNCONN 0      0                  *:8443             *:*    users:(("xray-linux-amd6",pid=14240,fd=8)) 
+udp   UNCONN 0      0                  *:8443             *:*    users:(("xray-linux-amd6",pid=15007,fd=9)) 
 udp   UNCONN 0      0               [::]:51820         [::]:*                                               
-tcp   LISTEN 0      4096       127.0.0.1:62789      0.0.0.0:*    users:(("xray-linux-amd6",pid=14240,fd=3)) 
+tcp   LISTEN 0      4096       127.0.0.1:62789      0.0.0.0:*    users:(("xray-linux-amd6",pid=15007,fd=6)) 
 tcp   LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=5487,fd=6))             
-tcp   LISTEN 0      4096       127.0.0.1:11111      0.0.0.0:*    users:(("xray-linux-amd6",pid=14240,fd=16))
-tcp   LISTEN 0      4096               *:443              *:*    users:(("xray-linux-amd6",pid=14240,fd=6)) 
-tcp   LISTEN 0      4096               *:8444             *:*    users:(("xray-linux-amd6",pid=14240,fd=9)) 
-tcp   LISTEN 0      4096               *:8443             *:*    users:(("xray-linux-amd6",pid=14240,fd=7)) 
-tcp   LISTEN 0      4096               *:18550            *:*    users:(("x-ui",pid=14230,fd=10))           
+tcp   LISTEN 0      4096       127.0.0.1:11111      0.0.0.0:*    users:(("xray-linux-amd6",pid=15007,fd=10))
+tcp   LISTEN 0      4096               *:443              *:*    users:(("xray-linux-amd6",pid=15007,fd=7)) 
+tcp   LISTEN 0      4096               *:8444             *:*    users:(("xray-linux-amd6",pid=15007,fd=3)) 
+tcp   LISTEN 0      4096               *:8443             *:*    users:(("xray-linux-amd6",pid=15007,fd=8)) 
 tcp   LISTEN 0      128             [::]:22            [::]:*    users:(("sshd",pid=5487,fd=7))             
-tcp   LISTEN 0      4096               *:2096             *:*    users:(("x-ui",pid=14230,fd=13))
+tcp   LISTEN 0      4096               *:2053             *:*    users:(("x-ui",pid=15000,fd=10))           
+tcp   LISTEN 0      4096               *:2096             *:*    users:(("x-ui",pid=15000,fd=13))
 ```

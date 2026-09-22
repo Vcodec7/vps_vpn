@@ -8,7 +8,7 @@
 | :--- | :--- | :--- | :--- |
 | **Домен VPS** | `v3.idivles.ru` (`212.113.101.104`) | — | Let's Encrypt SSL Active |
 | **SSH Доступ** | `v3.idivles.ru:22` | `root` | `dcc24e258f3a` |
-| **3X-UI Веб-Панель** | `http://v3.idivles.ru:18550/D11nS5my7qbNKjqt7L/` | `admin` | `AdminVpn2026!` |
+| **3X-UI Веб-Панель** | `https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/` | `admin` | `AdminVpn2026!` |
 | **Telegram Бот** | Бот запущен на VPS | Admin ID: `8555955292` | `8626856754:AAGqy454SZaLuZ4ftY7yrRIf57nnv5eozbI` |
 | **GitHub Репозиторий**| `https://github.com/Vcodec7/vps_vpn` | `Vcodec7` | `main branch` |
 

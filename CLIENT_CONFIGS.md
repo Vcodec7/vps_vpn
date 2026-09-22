@@ -57,6 +57,6 @@ trojan://cd3a13d7-46fe-40d4-904b-e522fe459544@v3.idivles.ru:8444?security=tls&sn
 
 ## 🌐 5. Веб-Панель 3X-UI
 
-- **URL:** [http://v3.idivles.ru:18550/D11nS5my7qbNKjqt7L/](http://v3.idivles.ru:18550/D11nS5my7qbNKjqt7L/)
+- **URL:** [https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/](https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/)
 - **Логин:** `admin`
 - **Пароль:** `AdminVpn2026!`

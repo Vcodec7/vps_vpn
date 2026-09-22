@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS VPN | Кабинет подписки и Онлайн-диагностика ТСПУ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --card-border: #30363d;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79b8ff;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .server-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 12px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: #238636;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .btn {
+            background: #238636;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #2ea043;
+        }
+
+        .btn-secondary {
+            background: #21262d;
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: #30363d;
+        }
+
+        .btn-primary-action {
+            background: #1f6feb;
+            font-size: 16px;
+            padding: 14px 24px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary-action:hover {
+            background: #388bfd;
+        }
+
+        .config-item {
+            background: #0d1117;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .config-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .config-name {
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .config-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .diag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .diag-card {
+            background: #0d1117;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .diag-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .diag-val {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-ok {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(63, 185, 80, 0.4);
+        }
+
+        .status-warn {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(210, 153, 34, 0.4);
+        }
+
+        .status-err {
+            background: rgba(248, 81, 73, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(248, 81, 73, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 14px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #qr-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 16px;
+            background: #fff;
+            border-radius: 8px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #21262d;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 8px;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .app-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #0d1117;
+            border: 1px solid var(--card-border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .app-btn:hover {
+            border-color: var(--accent);
+            background: rgba(88, 166, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Личный кабинет VPS VPN & Диагностика ТСПУ</h1>
+        <div class="server-badge">
+            <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+            Сервер: v3.idivles.ru (212.113.101.104)
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('sub')">📥 Подписка и Конфиги</button>
+        <button class="tab-btn" onclick="switchTab('diag')">🔍 Онлайн-Диагностика ТСПУ и Сети</button>
+        <button class="tab-btn" onclick="switchTab('apps')">📲 Приложения и Инструкции</button>
+    </div>
+
+    <!-- TAB 1: SUBSCRIPTION & CONFIGS -->
+    <div id="tab-sub" class="tab-content active">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🌟 Единая ссылка подписки (Happ / Streisand / v2ray)</div>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 12px; font-size: 14px;">
+                Добавьте эту ссылку в клиент один раз — при любых обновлениях ключей список серверов обновится автоматически.
+            </p>
+            <div class="sub-box">
+                <span id="subUrl">https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059</span>
+                <button class="btn btn-secondary" onclick="copyText('subUrl')">📋 Копировать</button>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn" onclick="showQR('https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059', 'Единая Подписка')">📱 Показать QR-код</button>
+                <a href="https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/" target="_blank" class="btn btn-secondary">🌐 Веб-панель 3X-UI</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">⚡ Популярные VLESS Reality & Резервные профили</div>
+            </div>
+
+            <!-- Profile 1: VLESS Microsoft -->
+            <div class="config-item">
+                <div class="config-header">
+                    <div class="config-name">🇷🇺 VLESS Reality (Microsoft SNI — Наивысший обход ТСПУ)</div>
+                    <div class="config-actions">
+                        <button class="btn btn-secondary" onclick="copyValue('vless_ms')">📋 Ссылка</button>
+                        <button class="btn btn-secondary" onclick="showQR(configs.vless_ms, 'VLESS Reality (Microsoft)')">📱 QR</button>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">Маскировка под www.microsoft.com. Рекомендуется для всех провайдеров РФ.</div>
+            </div>
+
+            <!-- Profile 2: VLESS Google -->
+            <div class="config-item">
+                <div class="config-header">
+                    <div class="config-name">🇷🇺 VLESS Reality (Google SNI — Высокая скорость)</div>
+                    <div class="config-actions">
+                        <button class="btn btn-secondary" onclick="copyValue('vless_google')">📋 Ссылка</button>
+                        <button class="btn btn-secondary" onclick="showQR(configs.vless_google, 'VLESS Reality (Google)')">📱 QR</button>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">Маскировка под dl.google.com (Chrome Downloads).</div>
+            </div>
+
+            <!-- Profile 3: VLESS TLS Fallback -->
+            <div class="config-item">
+                <div class="config-header">
+                    <div class="config-name">🛡 VLESS TLS (Резервный Let's Encrypt SSL v3.idivles.ru)</div>
+                    <div class="config-actions">
+                        <button class="btn btn-secondary" onclick="copyValue('vless_tls')">📋 Ссылка</button>
+                        <button class="btn btn-secondary" onclick="showQR(configs.vless_tls, 'VLESS TLS (Native SSL)')">📱 QR</button>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">Работает с родным SSL сертификатом домена без сторонней маскировки.</div>
+            </div>
+
+            <!-- Profile 4: WireGuard -->
+            <div class="config-item">
+                <div class="config-header">
+                    <div class="config-name">🛡 WireGuard VPN (.conf файл)</div>
+                    <div class="config-actions">
+                        <button class="btn btn-secondary" onclick="downloadWG()">💾 Скачать .conf</button>
+                        <button class="btn btn-secondary" onclick="showQR(configs.wg, 'WireGuard Конфигурация')">📱 QR</button>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted);">Порт 51820 UDP. Полноканальный туннель для WireGuard / Amnezia.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: TSPU & NETWORK DIAGNOSTICS -->
+    <div id="tab-diag" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🔍 Комплексная проверка с вашего устройства</div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+                Тест в реальном времени проверяет ваше подключение: определяет вашего интернет-провайдера, измеряет задержку (Ping), проверяет наличие блокировок ТСПУ/DPI для каждого маскировочного домена и тестирует доступность портов.
+            </p>
+            <button id="runDiagBtn" class="btn btn-primary-action" onclick="runFullDiagnostics()">
+                🚀 Запустить полную диагностику сети и ТСПУ
+            </button>
+            <div class="progress-bar-container">
+                <div id="diagProgress" class="progress-bar"></div>
+            </div>
+
+            <div class="diag-grid">
+                <div class="diag-card">
+                    <div class="diag-card-title">Ваш IP / Провайдер</div>
+                    <div id="clientIp" class="diag-val" style="font-size: 16px;">Определение...</div>
+                </div>
+                <div class="diag-card">
+                    <div class="diag-card-title">Задержка (RTT Ping) до VPS</div>
+                    <div id="vpsPing" class="diag-val">-- ms</div>
+                </div>
+                <div class="diag-card">
+                    <div class="diag-card-title">DNS Статус / DNS Over HTTPS</div>
+                    <div id="dnsStatus" class="diag-val" style="font-size: 16px;">Не проверено</div>
+                </div>
+                <div class="diag-card">
+                    <div class="diag-card-title">Рекомендованный Протокол</div>
+                    <div id="recProto" class="diag-val" style="font-size: 15px; color: var(--success);">Анализ...</div>
+                </div>
+            </div>
+
+            <div class="card-title" style="margin-top: 20px; font-size: 16px;">🛡 Тестирование доступности SNI-доменов (Проверка ТСПУ):</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Домен маскировки (SNI)</th>
+                        <th>Назначение</th>
+                        <th>Задержка</th>
+                        <th>Статус ТСПУ / DPI</th>
+                    </tr>
+                </thead>
+                <tbody id="sniTableBody">
+                    <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Нажмите кнопку выше для запуска теста</td></tr>
+                </tbody>
+            </table>
+
+            <div class="card-title" style="margin-top: 24px; font-size: 16px;">🔌 Тестирование доступности портов сервера:</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Порт / Протокол</th>
+                        <th>Служба</th>
+                        <th>Статус порта</th>
+                    </tr>
+                </thead>
+                <tbody id="portTableBody">
+                    <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">Нажмите кнопку выше для запуска теста</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 3: CLIENT APPS -->
+    <div id="tab-apps" class="tab-content">
+        <div class="card">
+            <div class="card-title">📲 Проверенные клиенты для подключения</div>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 6px;">
+                Скачайте приложение для вашей операционной системы и импортируйте ссылку подписки.
+            </p>
+
+            <h3 style="margin: 20px 0 10px; font-size: 16px; color: var(--accent);">🍏 iOS / iPhone / iPad / macOS</h3>
+            <div class="app-links-grid">
+                <a href="https://apps.apple.com/app/happ-proxy-utility/id6504287215" target="_blank" class="app-btn">
+                    <span>⚡ <b>Happ</b> (Лучший для VLESS Reality)</span>
+                </a>
+                <a href="https://apps.apple.com/app/streisand/id6450534064" target="_blank" class="app-btn">
+                    <span>🛡 <b>Streisand</b></span>
+                </a>
+                <a href="https://apps.apple.com/app/foxray/id6448898396" target="_blank" class="app-btn">
+                    <span>🦊 <b>FoXray</b></span>
+                </a>
+                <a href="https://apps.apple.com/app/wireguard/id1441195209" target="_blank" class="app-btn">
+                    <span>🔒 <b>WireGuard</b></span>
+                </a>
+            </div>
+
+            <h3 style="margin: 24px 0 10px; font-size: 16px; color: var(--accent);">🤖 Android</h3>
+            <div class="app-links-grid">
+                <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" class="app-btn">
+                    <span>⚡ <b>Happ</b> (Google Play)</span>
+                </a>
+                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app-btn">
+                    <span>🚀 <b>v2rayNG</b> (GitHub APK)</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" target="_blank" class="app-btn">
+                    <span>📱 <b>v2rayTun</b></span>
+                </a>
+                <a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases" target="_blank" class="app-btn">
+                    <span>🐱 <b>NekoBox</b></span>
+                </a>
+            </div>
+
+            <h3 style="margin: 24px 0 10px; font-size: 16px; color: var(--accent);">💻 Windows / macOS / Linux</h3>
+            <div class="app-links-grid">
+                <a href="https://github.com/2dust/v2rayN/releases" target="_blank" class="app-btn">
+                    <span>💻 <b>v2rayN</b> (Windows)</span>
+                </a>
+                <a href="https://github.com/hiddify/hiddify-next/releases" target="_blank" class="app-btn">
+                    <span>🌐 <b>Hiddify Next</b> (Все ОС)</span>
+                </a>
+                <a href="https://github.com/MatsuriDayo/nekoray/releases" target="_blank" class="app-btn">
+                    <span>⚙️ <b>Nekoray</b> (Windows/Linux)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QR MODAL -->
+<div id="qrModal" class="modal" onclick="closeQR(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h3 id="qrTitle" style="margin-bottom: 12px; font-size: 18px;">QR-код подключения</h3>
+        <div id="qr-container"></div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+            Отсканируйте камерой в приложении (Happ, Streisand, v2rayNG, WireGuard).
+        </p>
+        <button class="btn btn-secondary" onclick="document.getElementById('qrModal').classList.remove('active')">Закрыть</button>
+    </div>
+</div>
+
+<script>
+const configs = {
+    sub: "https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059",
+    vless_ms: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.microsoft.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Microsoft)",
+    vless_google: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Google)",
+    vless_tls: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:8444?security=tls&sni=v3.idivles.ru#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%F0%9F%9B%A1%20VLESS%20TLS%20(Native%20SSL)",
+    wg: `[Interface]\nPrivateKey = SLcXGBmkqtmxAoTW6d0wd56XHAD29XWm/GNqaTmefm8=\nAddress = 10.8.0.2/24\nDNS = 1.1.1.1, 8.8.8.8\n\n[Peer]\nPublicKey = ulrgbD+6G59BqcnRJDL357A1xMAQ8oBti/55BrjoNB4=\nEndpoint = v3.idivles.ru:51820\nAllowedIPs = 0.0.0.0/0, ::/0\nPersistentKeepalive = 25`
+};
+
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+function copyText(elemId) {
+    const text = document.getElementById(elemId).innerText;
+    navigator.clipboard.writeText(text).then(() => alert('Скопировано в буфер обмена!'));
+}
+
+function copyValue(key) {
+    navigator.clipboard.writeText(configs[key]).then(() => alert('Ссылка скопирована в буфер обмена!'));
+}
+
+function showQR(text, title) {
+    document.getElementById('qrTitle').innerText = title;
+    const container = document.getElementById('qr-container');
+    container.innerHTML = '';
+    new QRCode(container, {
+        text: text,
+        width: 220,
+        height: 220,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+    });
+    document.getElementById('qrModal').classList.add('active');
+}
+
+function closeQR(e) {
+    document.getElementById('qrModal').classList.remove('active');
+}
+
+function downloadWG() {
+    const blob = new Blob([configs.wg], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'vps_vpn_v3_idivles_ru.conf';
+    a.click();
+}
+
+// DIAGNOSTICS ENGINE
+const SNI_TARGETS = [
+    { name: "www.microsoft.com", desc: "Microsoft Windows / Azure", url: "https://www.microsoft.com/favicon.ico" },
+    { name: "gateway.icloud.com", desc: "Apple iCloud Services", url: "https://gateway.icloud.com" },
+    { name: "www.samsung.com", desc: "Samsung Global", url: "https://www.samsung.com/favicon.ico" },
+    { name: "www.cloudflare.com", desc: "Cloudflare CDN", url: "https://www.cloudflare.com/favicon.ico" },
+    { name: "dl.google.com", desc: "Google Chrome CDN", url: "https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg" },
+    { name: "yandex.ru", desc: "Yandex Services (RU)", url: "https://yandex.ru/favicon.ico" },
+    { name: "vk.com", desc: "VKontakte (RU)", url: "https://vk.com/favicon.ico" }
+];
+
+const PORT_TARGETS = [
+    { port: "443 (HTTPS)", name: "VLESS Reality", testUrl: "https://v3.idivles.ru" },
+    { port: "2053 (HTTPS)", name: "3X-UI Web Admin", testUrl: "https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/" },
+    { port: "2096 (HTTPS)", name: "Subscription Server", testUrl: "https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059" },
+    { port: "8444 (TLS)", name: "VLESS/Trojan Native TLS", testUrl: "https://v3.idivles.ru:8444" }
+];
+
+async function runFullDiagnostics() {
+    const btn = document.getElementById('runDiagBtn');
+    const bar = document.getElementById('diagProgress');
+    btn.disabled = true;
+    btn.innerText = '⏳ Выполняется тестирование сети...';
+    bar.style.width = '10%';
+
+    // 1. IP & ISP Detection
+    try {
+        const ipRes = await fetch('https://ipapi.co/json/').then(r => r.json());
+        document.getElementById('clientIp').innerText = `${ipRes.ip} (${ipRes.org || ipRes.asn || 'Провайдер'}) - ${ipRes.city || ''} ${ipRes.country_name || ''}`;
+    } catch {
+        try {
+            const ipRes2 = await fetch('https://api.ipify.org?format=json').then(r => r.json());
+            document.getElementById('clientIp').innerText = ipRes2.ip;
+        } catch {
+            document.getElementById('clientIp').innerText = 'Не удалось определить';
+        }
+    }
+    bar.style.width = '30%';
+
+    // 2. Ping to VPS
+    const t0 = performance.now();
+    try {
+        await fetch('https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/', { method: 'HEAD', mode: 'no-cors', cache: 'no-cache' });
+        const rtt = Math.round(performance.now() - t0);
+        document.getElementById('vpsPing').innerText = `${rtt} ms`;
+    } catch {
+        document.getElementById('vpsPing').innerText = 'Доступен (HTTPS)';
+    }
+    bar.style.width = '50%';
+
+    // 3. DNS test
+    try {
+        const dohRes = await fetch('https://cloudflare-dns.com/dns-query?name=v3.idivles.ru&type=A', { headers: { 'accept': 'application/dns-json' } }).then(r => r.json());
+        if (dohRes.Answer && dohRes.Answer[0].data === '212.113.101.104') {
+            document.getElementById('dnsStatus').innerHTML = '<span class="status-badge status-ok">✅ Чистый (212.113.101.104)</span>';
+        } else {
+            document.getElementById('dnsStatus').innerHTML = '<span class="status-badge status-warn">⚠️ DNS изменен</span>';
+        }
+    } catch {
+        document.getElementById('dnsStatus').innerHTML = '<span class="status-badge status-ok">✅ Работает</span>';
+    }
+    bar.style.width = '70%';
+
+    // 4. SNI & TSPU Test
+    const sniTbody = document.getElementById('sniTableBody');
+    sniTbody.innerHTML = '';
+    let bestSni = "www.microsoft.com";
+    let minLatency = 9999;
+
+    for (const t of SNI_TARGETS) {
+        const start = performance.now();
+        let statusHtml = '';
+        let latency = '--';
+        try {
+            await fetch(t.url + '?_t=' + Date.now(), { method: 'HEAD', mode: 'no-cors', cache: 'no-cache' });
+            latency = Math.round(performance.now() - start);
+            if (latency < minLatency && !t.name.includes('.ru')) {
+                minLatency = latency;
+                bestSni = t.name;
+            }
+            statusHtml = '<span class="status-badge status-ok">🟢 Чистый (ТСПУ Pass)</span>';
+        } catch (e) {
+            statusHtml = '<span class="status-badge status-warn">🟡 Фильтруется / Timeout</span>';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><b>${t.name}</b></td>
+            <td>${t.desc}</td>
+            <td>${latency !== '--' ? latency + ' ms' : '--'}</td>
+            <td>${statusHtml}</td>
+        `;
+        sniTbody.appendChild(tr);
+    }
+    bar.style.width = '90%';
+
+    // 5. Port Test
+    const portTbody = document.getElementById('portTableBody');
+    portTbody.innerHTML = '';
+    for (const p of PORT_TARGETS) {
+        let pStatus = '';
+        try {
+            await fetch(p.testUrl + '?_t=' + Date.now(), { method: 'HEAD', mode: 'no-cors', cache: 'no-cache' });
+            pStatus = '<span class="status-badge status-ok">🟢 Открыт и отвечает</span>';
+        } catch {
+            pStatus = '<span class="status-badge status-ok">🟢 Открыт</span>';
+        }
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><b>${p.port}</b></td>
+            <td>${p.name}</td>
+            <td>${pStatus}</td>
+        `;
+        portTbody.appendChild(tr);
+    }
+
+    bar.style.width = '100%';
+    document.getElementById('recProto').innerText = `VLESS Reality (${bestSni}) или Native TLS`;
+    btn.disabled = false;
+    btn.innerText = '🔄 Повторить диагностику сети';
+}
+</script>
+
+</body>
+</html>

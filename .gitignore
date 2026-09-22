@@ -1,0 +1,16 @@
+# Sensitive files & SSH Keys
+*.key
+*.pem
+*.pub
+id_*
+.ssh/
+secrets/
+*.env
+*.pass
+*.log
+
+# Temp / OS
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc

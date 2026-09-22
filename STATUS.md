@@ -1,68 +1,35 @@
 # 📈 VPS Status & Health Report
 
-**Последнее обновление:** `2026-09-22 16:41:11`
+**Последнее обновление:** `2026-09-22 19:10:48`
 **Сервер:** `212.113.101.104`
 
 ## 🖥 Операционная система и Ядро
 - **ОС:** `Debian GNU/Linux 13 (trixie)`
 - **Ядро:** `6.12.85+deb13-amd64`
-- **Аптайм:** `up 1 hour, 37 minutes`
-- **TCP Контроль перегрузок:** `net.ipv4.tcp_congestion_control = bbr`
+- **Аптайм:** `up 13 minutes`
+- **TCP Контроль перегрузок:** `net.ipv4.tcp_congestion_control = cubic`
 
 ## 🧠 Память (RAM & Swap)
 ```
 total        used        free      shared  buff/cache   available
-Mem:           3.8Gi       489Mi       1.5Gi       2.0Mi       2.1Gi       3.4Gi
-Swap:          1.0Gi          0B       1.0Gi
+Mem:           3.8Gi       285Mi       3.6Gi       2.0Mi       113Mi       3.6Gi
+Swap:             0B          0B          0B
 ```
 
 ## 💾 Дисковое пространство
 ```
 Filesystem     Type  Size  Used Avail Use% Mounted on
-/dev/vda2      ext4  9.8G  3.4G  5.9G  37% /
+/dev/vda2      ext4  9.8G  906M  8.4G  10% /
 ```
 
 ## 🛡 Фаервол (UFW)
 ```
-Status: active
 
-To                         Action      From
---                         ------      ----
-22/tcp                     ALLOW       Anywhere                   # SSH
-80/tcp                     ALLOW       Anywhere                   # HTTP / ACME
-443/tcp                    ALLOW       Anywhere                  
-443/udp                    ALLOW       Anywhere                  
-2053/tcp                   ALLOW       Anywhere                  
-2096/tcp                   ALLOW       Anywhere                  
-51820/udp                  ALLOW       Anywhere                  
-8443/tcp                   ALLOW       Anywhere                  
-8444/tcp                   ALLOW       Anywhere                  
-18550/tcp                  ALLOW       Anywhere                  
-22/tcp (v6)                ALLOW       Anywhere (v6)              # SSH
-80/tcp (v6)                ALLOW       Anywhere (v6)              # HTTP / ACME
-443/tcp (v6)               ALLOW       Anywhere (v6)             
-443/udp (v6)               ALLOW       Anywhere (v6)             
-2053/tcp (v6)              ALLOW       Anywhere (v6)             
-2096/tcp (v6)              ALLOW       Anywhere (v6)             
-51820/udp (v6)             ALLOW       Anywhere (v6)             
-8443/tcp (v6)              ALLOW       Anywhere (v6)             
-8444/tcp (v6)              ALLOW       Anywhere (v6)             
-18550/tcp (v6)             ALLOW       Anywhere (v6)
 ```
 
 ## 🔌 Активные сетевые порты и службы
 ```
-Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                     
-udp   UNCONN 0      0            0.0.0.0:51820      0.0.0.0:*                                               
-udp   UNCONN 0      0                  *:8443             *:*    users:(("xray-linux-amd6",pid=15007,fd=9)) 
-udp   UNCONN 0      0               [::]:51820         [::]:*                                               
-tcp   LISTEN 0      4096       127.0.0.1:62789      0.0.0.0:*    users:(("xray-linux-amd6",pid=15007,fd=6)) 
-tcp   LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=5487,fd=6))             
-tcp   LISTEN 0      4096       127.0.0.1:11111      0.0.0.0:*    users:(("xray-linux-amd6",pid=15007,fd=10))
-tcp   LISTEN 0      4096               *:443              *:*    users:(("xray-linux-amd6",pid=15007,fd=7)) 
-tcp   LISTEN 0      4096               *:8444             *:*    users:(("xray-linux-amd6",pid=15007,fd=3)) 
-tcp   LISTEN 0      4096               *:8443             *:*    users:(("xray-linux-amd6",pid=15007,fd=8)) 
-tcp   LISTEN 0      128             [::]:22            [::]:*    users:(("sshd",pid=5487,fd=7))             
-tcp   LISTEN 0      4096               *:2053             *:*    users:(("x-ui",pid=15000,fd=10))           
-tcp   LISTEN 0      4096               *:2096             *:*    users:(("x-ui",pid=15000,fd=13))
+Netid State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess                       
+tcp   LISTEN 0      128          0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=740,fd=6))
+tcp   LISTEN 0      128             [::]:22           [::]:*    users:(("sshd",pid=740,fd=7))
 ```

@@ -378,10 +378,10 @@
 
 <div class="container">
     <header>
-        <h1>Личный кабинет VPS VPN & Диагностика ТСПУ</h1>
+        <h1>Личный кабинет VPS VPN & Диагностика ТСПУ (IPv6)</h1>
         <div class="server-badge">
             <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
-            Сервер: v3.idivles.ru (212.113.101.104)
+            Сервер: [2a0b:4140:e510::2] (Чистый IPv6)
         </div>
     </header>
 
@@ -601,11 +601,10 @@
 
 <script>
 const configs = {
-    sub: "https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059",
-    vless_ms: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.microsoft.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Microsoft)",
-    vless_google: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Google)",
-    vless_tls: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:8444?security=tls&sni=v3.idivles.ru#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%F0%9F%9B%A1%20VLESS%20TLS%20(Native%20SSL)",
-    wg: `[Interface]\nPrivateKey = SLcXGBmkqtmxAoTW6d0wd56XHAD29XWm/GNqaTmefm8=\nAddress = 10.8.0.2/24\nDNS = 1.1.1.1, 8.8.8.8\n\n[Peer]\nPublicKey = ulrgbD+6G59BqcnRJDL357A1xMAQ8oBti/55BrjoNB4=\nEndpoint = v3.idivles.ru:51820\nAllowedIPs = 0.0.0.0/0, ::/0\nPersistentKeepalive = 25`
+    sub: "http://[2a0b:4140:e510::2]:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059",
+    vless_icloud: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@[2a0b:4140:e510::2]:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=gateway.icloud.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20IPv6%20Reality%20(iCloud)",
+    vless_ms: "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@[2a0b:4140:e510::2]:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.microsoft.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20IPv6%20Reality%20(Microsoft)",
+    wg: `[Interface]\nPrivateKey = SLcXGBmkqtmxAoTW6d0wd56XHAD29XWm/GNqaTmefm8=\nAddress = 10.8.0.2/24, fd00::2/64\nDNS = 1.1.1.1, 2606:4700:4700::1111\n\n[Peer]\nPublicKey = ulrgbD+6G59BqcnRJDL357A1xMAQ8oBti/55BrjoNB4=\nEndpoint = [2a0b:4140:e510::2]:51820\nAllowedIPs = 0.0.0.0/0, ::/0\nPersistentKeepalive = 25`
 };
 
 function switchTab(tabId) {

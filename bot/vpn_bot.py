@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Telegram VPN Management & Config Bot
+Telegram VPN Management & Config Bot (IPv6 Optimized)
 Token: 8626856754:AAGqy454SZaLuZ4ftY7yrRIf57nnv5eozbI
 Admin ID: 8555955292
 """
@@ -17,7 +17,8 @@ from telebot import types
 
 TOKEN = os.getenv("BOT_TOKEN", "8626856754:AAGqy454SZaLuZ4ftY7yrRIf57nnv5eozbI")
 ADMIN_ID = int(os.getenv("ADMIN_ID", "8555955292"))
-PORTAL_URL = "http://v3.idivles.ru:8080"
+IPV6_HOST = "2a0b:4140:e510::2"
+PORTAL_URL = f"http://[{IPV6_HOST}]/"
 CONFIGS_PATH = "/opt/vps_vpn/configs.json"
 
 bot = telebot.TeleBot(TOKEN)
@@ -26,19 +27,7 @@ def load_configs():
     if os.path.exists(CONFIGS_PATH):
         with open(CONFIGS_PATH, "r", encoding="utf-8") as f:
             return json.load(f)
-    return {
-        "domain": "v3.idivles.ru",
-        "sub_url": "https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059",
-        "vless_link": "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.microsoft.com&sid=106ec6b5&flow=xtls-rprx-vision#VPS-VLESS-Reality",
-        "ss_link": "ss://YWVzLTEyOC1nY206enVwV0ZCZWhKaWROQTF5NUtic3ZiQUB2My5pZGl2bGVzLnJ1Ojg0NDM=#VPS-Shadowsocks",
-        "trojan_link": "trojan://cd3a13d7-46fe-40d4-904b-e522fe459544@v3.idivles.ru:8444?security=tls&sni=v3.idivles.ru#VPS-Trojan-TLS",
-        "wg_client_conf": "[Interface]\nPrivateKey = SLcXGBmkqtmxAoTW6d0wd56XHAD29XWm/GNqaTmefm8=\nAddress = 10.8.0.2/24\nDNS = 1.1.1.1, 8.8.8.8\n\n[Peer]\nPublicKey = ulrgbD+6G59BqcnRJDL357A1xMAQ8oBti/55BrjoNB4=\nEndpoint = v3.idivles.ru:51820\nAllowedIPs = 0.0.0.0/0, ::/0\nPersistentKeepalive = 25\n",
-        "admin_panel": {
-            "url": "https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/",
-            "username": "admin",
-            "password": "AdminVpn2026!"
-        }
-    }
+    return {}
 
 def make_qr_code(text):
     qr = qrcode.QRCode(
@@ -58,13 +47,13 @@ def make_qr_code(text):
 
 def main_keyboard(user_id):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    b_portal = types.KeyboardButton("🔍 Веб-Кабинет и Тест ТСПУ")
-    b0 = types.KeyboardButton("📥 Единая Подписка (Happ / iOS / Android)")
-    b1 = types.KeyboardButton("⚡ Популярные VLESS Конфиги")
-    b2 = types.KeyboardButton("🛡 WireGuard")
+    b_portal = types.KeyboardButton("🌐 Веб-Кабинет (IPv6)")
+    b0 = types.KeyboardButton("📥 Единая Подписка (IPv6 Happ)")
+    b1 = types.KeyboardButton("⚡ VLESS Reality (Чистый IPv6)")
+    b2 = types.KeyboardButton("🛡 WireGuard (IPv6)")
     b3 = types.KeyboardButton("🚀 Shadowsocks")
-    b4 = types.KeyboardButton("🌐 Веб-Админка 3X-UI")
-    b5 = types.KeyboardButton("📲 Скачать клиенты (Happ / v2ray)")
+    b4 = types.KeyboardButton("🌐 Админка 3X-UI")
+    b5 = types.KeyboardButton("📲 Скачать клиенты")
     markup.add(b_portal)
     markup.add(b0)
     markup.add(b1, b2)
@@ -89,120 +78,109 @@ def admin_keyboard():
 def send_welcome(message):
     user_id = message.from_user.id
     welcome_text = (
-        "👋 **Добро пожаловать в панель управления VPS VPN!**\n\n"
-        "✨ **Сервер:** `v3.idivles.ru`\n\n"
-        "🌐 **Веб-Кабинет & Диагностика:** [http://v3.idivles.ru:8080](http://v3.idivles.ru:8080)\n\n"
+        "👋 **Добро пожаловать в панель VPS VPN (IPv6 Active)!**\n\n"
+        f"✨ **Чистый IPv6 адрес сервера:** `[{IPV6_HOST}]` (работает в обход блокировок ТСПУ)\n\n"
+        f"🌐 **Веб-Кабинет:** [http://[{IPV6_HOST}]/](http://[{IPV6_HOST}]/)\n\n"
         "Выберите действие в меню ниже:\n"
-        "• **🔍 Веб-Кабинет и Тест ТСПУ** — онлайн-проверка блокировок провайдера и QR-коды.\n"
-        "• **📥 Единая Подписка** — автообновление серверов в **Happ** / **Streisand**.\n"
-        "• **⚡ Популярные VLESS Конфиги** — готовые профили (Microsoft, Google, Samsung).\n"
-        "• **🛡 WireGuard** — классический файл конфигурации.\n"
-        "• **🌐 Веб-Админка 3X-UI** — управление клиентами (HTTPS)."
+        "• **📥 Единая Подписка (IPv6 Happ)** — ссылка автообновления для Happ / Streisand.\n"
+        "• **⚡ VLESS Reality (Чистый IPv6)** — готовые профили iCloud и Microsoft.\n"
+        "• **🛡 WireGuard (IPv6)** — полноканальный VPN туннель.\n"
+        "• **🌐 Веб-Кабинет** — тест ТСПУ и QR-коды прямо в браузере."
     )
     bot.send_message(message.chat.id, welcome_text, parse_mode="Markdown", reply_markup=main_keyboard(user_id))
 
-@bot.message_handler(func=lambda msg: msg.text == "🔍 Веб-Кабинет и Тест ТСПУ")
+@bot.message_handler(func=lambda msg: msg.text == "🌐 Веб-Кабинет (IPv6)")
 def handle_portal_link(message):
     text = (
-        "🔍 **Интерактивный Веб-Кабинет и Центр Диагностики ТСПУ**\n\n"
+        "🌐 **Веб-Кабинет и Центр Диагностики ТСПУ (IPv6)**\n\n"
         f"🔗 **Ссылка для входа:** {PORTAL_URL}\n\n"
-        "**В веб-кабинете доступно:**\n"
-        "1. 🚀 **Тестирование ТСПУ/DPI** — проверка доступности маскировочных SNI (Microsoft, Google, Apple, Samsung).\n"
-        "2. 🔌 **Тест портов и DNS** — проверка блокировок со стороны вашего мобильного/домашнего провайдера.\n"
-        "3. ⚡ **Генератор QR-кодов** — удобное сканирование конфигураций прямо с экрана.\n"
-        "4. 📥 **Подписка Happ/Streisand** — импорт в один клик."
+        "Откройте ссылку с телефона в мобильной сети (МТС, Билайн, Мегафон, Теле2)."
     )
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
-@bot.message_handler(func=lambda msg: msg.text == "📥 Единая Подписка (Happ / iOS / Android)")
+@bot.message_handler(func=lambda msg: msg.text == "📥 Единая Подписка (IPv6 Happ)")
 def handle_subscription(message):
-    sub_url = "https://v3.idivles.ru:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059"
+    sub_url = f"http://[{IPV6_HOST}]:2096/9k7xuvoxldiq5zsh/0861ace1ba5cd059"
     caption = (
-        "📥 **Единая ссылка подписки (Автообновление)**\n\n"
+        "📥 **Единая ссылка подписки (IPv6 Автообновление)**\n\n"
         "Нажмите на ссылку, чтобы скопировать её:\n"
         f"`{sub_url}`\n\n"
-        "📱 **Как добавить в Happ (iOS / Android):**\n"
+        "📱 **Как добавить в Happ / Streisand / v2rayNG:**\n"
         "1. Скопируйте ссылку выше (или отсканируйте QR-код).\n"
-        "2. Откройте приложение **Happ** (или Streisand / v2rayNG / v2rayN / Hiddify).\n"
-        "3. Нажмите **+** в правом верхнем углу -> **Добавить подписку** (Import from clipboard).\n"
-        "4. Все серверы и протоколы сразу загрузятся в список!"
+        "2. Откройте **Happ** -> нажмите **`+`** -> **Добавить подписку** (Импорт).\n"
+        "3. В списке появятся серверы — выберите и нажмите **Подключиться**."
     )
     qr_img = make_qr_code(sub_url)
     bot.send_photo(message.chat.id, qr_img, caption=caption, parse_mode="Markdown")
 
-@bot.message_handler(func=lambda msg: msg.text in ["⚡ Популярные VLESS Конфиги", "⚡ VLESS Reality"])
+@bot.message_handler(func=lambda msg: msg.text == "⚡ VLESS Reality (Чистый IPv6)")
 def handle_vless_configs(message):
-    vless_ms = "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=www.microsoft.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Microsoft)"
-    vless_google = "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:443?type=tcp&security=reality&pbk=g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs&fp=chrome&sni=dl.google.com&sid=106ec6b5&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20VLESS%20Reality%20(Google)"
-    vless_tls = "vless://8cb32046-0d00-40c6-81c0-325bc1ac8fa4@v3.idivles.ru:8444?security=tls&sni=v3.idivles.ru#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%F0%9F%9B%A1%20VLESS%20TLS%20(Native%20SSL)"
+    client_uuid = "8cb32046-0d00-40c6-81c0-325bc1ac8fa4"
+    pbk = "g6pfxKCDQFLpN1BKaSC-to-_orpUlP7WyiE9ATAfUxs"
+    sid = "106ec6b5"
+    
+    vless_icloud = f"vless://{client_uuid}@[{IPV6_HOST}]:443?type=tcp&security=reality&pbk={pbk}&fp=chrome&sni=gateway.icloud.com&sid={sid}&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20IPv6%20Reality%20(iCloud)"
+    vless_ms = f"vless://{client_uuid}@[{IPV6_HOST}]:443?type=tcp&security=reality&pbk={pbk}&fp=chrome&sni=www.microsoft.com&sid={sid}&flow=xtls-rprx-vision#%F0%9F%87%B7%F0%9F%87%BA%20VPS%20%E2%9A%A1%20IPv6%20Reality%20(Microsoft)"
 
     caption = (
-        "⚡ **Популярные конфигурации VLESS Reality & Резерв**\n\n"
-        "🔹 **1. Microsoft SNI (Рекомендуется для РФ):**\n"
+        "⚡ **VLESS Reality (Чистый IPv6 — Обход ТСПУ)**\n\n"
+        "🔹 **1. Apple iCloud Gateway (Основной / Эталонный):**\n"
+        f"`{vless_icloud}`\n\n"
+        "🔹 **2. Microsoft SNI:**\n"
         f"`{vless_ms}`\n\n"
-        "🔹 **2. Google SNI (Высокая скорость):**\n"
-        f"`{vless_google}`\n\n"
-        "🔹 **3. Native SSL (Резервный Let's Encrypt v3.idivles.ru):**\n"
-        f"`{vless_tls}`\n\n"
-        "📲 *Нажмите на любую ссылку выше, чтобы скопировать и вставить в Happ / Streisand / v2ray.*"
+        "📲 *Скопируйте ссылку выше и вставьте в Happ / Streisand / v2ray.*"
     )
-    qr_img = make_qr_code(vless_ms)
+    qr_img = make_qr_code(vless_icloud)
     bot.send_photo(message.chat.id, qr_img, caption=caption, parse_mode="Markdown")
 
-@bot.message_handler(func=lambda msg: msg.text == "🛡 WireGuard")
+@bot.message_handler(func=lambda msg: msg.text == "🛡 WireGuard (IPv6)")
 def handle_wireguard(message):
     cfg = load_configs()
     wg_conf = cfg.get("wg_client_conf", "")
     caption = (
-        "🛡 **WireGuard VPN Конфигурация**\n\n"
-        "Отсканируйте QR-код в приложении **WireGuard** / **AmneziaVPN** или используйте файл конфигурации ниже."
+        "🛡 **WireGuard VPN Конфигурация (IPv6)**\n\n"
+        f"Endpoint: `[{IPV6_HOST}]:51820`\n"
+        "Отсканируйте QR-код в приложении **WireGuard** или используйте файл ниже."
     )
     qr_img = make_qr_code(wg_conf)
     bot.send_photo(message.chat.id, qr_img, caption=caption, parse_mode="Markdown")
     
     conf_file = io.BytesIO(wg_conf.encode('utf-8'))
-    conf_file.name = "vps_vpn_client.conf"
-    bot.send_document(message.chat.id, conf_file, caption="📄 Файл конфигурации для WireGuard")
+    conf_file.name = "vps_vpn_ipv6.conf"
+    bot.send_document(message.chat.id, conf_file, caption="📄 Файл конфигурации WireGuard (IPv6)")
 
 @bot.message_handler(func=lambda msg: msg.text == "🚀 Shadowsocks")
 def handle_shadowsocks(message):
-    cfg = load_configs()
-    ss_link = cfg.get("ss_link", "")
-    caption = (
-        "🚀 **Shadowsocks 2022 (AES-128-GCM)**\n\n"
-        f"`{ss_link}`\n\n"
-        "Импортируйте ссылку или QR-код в приложение **Shadowrocket**, **NekoBox**, **v2rayN**."
-    )
+    ss_raw = "aes-128-gcm:zupWFBehJidNA1y5KbsvbA@" + f"[{IPV6_HOST}]:8443"
+    import base64
+    ss_b64 = base64.urlsafe_b64encode(ss_raw.encode()).decode()
+    ss_link = f"ss://{ss_b64}#VPS-IPv6-Shadowsocks"
+    caption = f"🚀 **Shadowsocks 2022 (IPv6)**\n\n`{ss_link}`"
     qr_img = make_qr_code(ss_link)
     bot.send_photo(message.chat.id, qr_img, caption=caption, parse_mode="Markdown")
 
-@bot.message_handler(func=lambda msg: msg.text == "🌐 Веб-Админка 3X-UI")
+@bot.message_handler(func=lambda msg: msg.text == "🌐 Админка 3X-UI")
 def handle_admin_panel(message):
     text = (
-        "🌐 **Веб-панель управления 3X-UI (HTTPS + SSL)**\n\n"
-        "🔗 **URL:** `https://v3.idivles.ru:2053/D11nS5my7qbNKjqt7L/`\n"
+        "🌐 **Веб-панель 3X-UI (IPv6)**\n\n"
+        f"🔗 **URL:** `http://[{IPV6_HOST}]:2053/D11nS5my7qbNKjqt7L/`\n"
         "👤 **Логин:** `admin`\n"
         "🔑 **Пароль:** `AdminVpn2026!`"
     )
     bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
-@bot.message_handler(func=lambda msg: msg.text in ["📲 Скачать клиенты (Happ / v2ray)", "📲 Скачать клиенты"])
+@bot.message_handler(func=lambda msg: msg.text == "📲 Скачать клиенты")
 def handle_clients(message):
     text = (
         "📲 **Рекомендуемые клиенты для подключения:**\n\n"
         "🍏 **iOS / iPad / macOS:**\n"
-        "• [Happ (Рекомендуется для VLESS)](https://apps.apple.com/app/happ-proxy-utility/id6504287215)\n"
+        "• [Happ (Рекомендуется)](https://apps.apple.com/app/happ-proxy-utility/id6504287215)\n"
         "• [Streisand](https://apps.apple.com/app/streisand/id6450534064)\n"
-        "• [FoXray](https://apps.apple.com/app/foxray/id6448898396)\n"
         "• [WireGuard](https://apps.apple.com/app/wireguard/id1441195209)\n\n"
         "🤖 **Android:**\n"
         "• [Happ (Google Play)](https://play.google.com/store/apps/details?id=com.happproxy)\n"
-        "• [v2rayNG (GitHub)](https://github.com/2dust/v2rayNG/releases)\n"
-        "• [v2rayTun](https://play.google.com/store/apps/details?id=com.v2raytun.android)\n"
-        "• [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid/releases)\n\n"
-        "💻 **Windows / macOS / Linux:**\n"
-        "• [v2rayN (Windows)](https://github.com/2dust/v2rayN/releases)\n"
-        "• [Hiddify (Все платформы)](https://github.com/hiddify/hiddify-next/releases)"
+        "• [v2rayNG](https://github.com/2dust/v2rayNG/releases)\n"
+        "• [WireGuard](https://play.google.com/store/apps/details?id=com.wireguard.android)"
     )
     bot.send_message(message.chat.id, text, parse_mode="Markdown", disable_web_page_preview=True)
 
@@ -226,13 +204,13 @@ def handle_admin_callback(call):
         uptime = subprocess.getoutput("uptime -p")
         mem = subprocess.getoutput("free -h")
         disk = subprocess.getoutput("df -hT /")
-        bbr = subprocess.getoutput("sysctl net.ipv4.tcp_congestion_control")
+        bbr = subprocess.getoutput("sysctl -n net.ipv4.tcp_congestion_control")
         xui = subprocess.getoutput("systemctl is-active x-ui")
         wg = subprocess.getoutput("systemctl is-active wg-quick@wg0")
         portal = subprocess.getoutput("systemctl is-active vps-vpn-portal")
         
         status_msg = (
-            f"📊 **Статус Сервера v3.idivles.ru**\n\n"
+            f"📊 **Статус Сервера (IPv6: [{IPV6_HOST}])**\n\n"
             f"⏱ **Аптайм:** `{uptime}`\n"
             f"🚀 **TCP BBR:** `{bbr}`\n"
             f"🔹 **3X-UI Service:** `{xui}`\n"
@@ -245,11 +223,11 @@ def handle_admin_callback(call):
 
     elif data == "adm_restart_xui":
         res = subprocess.getoutput("systemctl restart x-ui")
-        bot.send_message(call.message.chat.id, f"✅ Служба 3X-UI перезапущена!\n`{res}`", parse_mode="Markdown")
+        bot.send_message(call.message.chat.id, "✅ Служба 3X-UI перезапущена!", parse_mode="Markdown")
 
     elif data == "adm_restart_wg":
         res = subprocess.getoutput("systemctl restart wg-quick@wg0")
-        bot.send_message(call.message.chat.id, f"✅ Служба WireGuard перезапущена!\n`{res}`", parse_mode="Markdown")
+        bot.send_message(call.message.chat.id, "✅ Служба WireGuard перезапущена!", parse_mode="Markdown")
 
     elif data == "adm_ufw":
         ufw = subprocess.getoutput("ufw status verbose")
